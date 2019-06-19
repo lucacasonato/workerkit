@@ -62,90 +62,98 @@ export class API {
   }
 
   /**
-   * Get a list of all KV namespaces
+   * kv
    */
-  public async kv_list(
-    page?: number,
-    perPage?: number
-  ): Promise<Array<{ id: string; title: string }>> {
-    const querys = [];
+  public get kv() {
+    const api = this;
 
-    if (page) {
-      querys.push('page=' + page.toString());
-    }
-    if (perPage) {
-      querys.push('per_page=' + perPage.toString());
-    }
+    return {
+      /**
+       * Get a list of all KV namespaces
+       */
+      async list(
+        page?: number,
+        perPage?: number
+      ): Promise<Array<{ id: string; title: string }>> {
+        const querys = [];
 
-    const data = await this.get(`/storage/kv/namespaces?${querys.join('&')}`);
+        if (page) {
+          querys.push('page=' + page.toString());
+        }
+        if (perPage) {
+          querys.push('per_page=' + perPage.toString());
+        }
 
-    if (data && typeof data === 'object' && data.success && data.result) {
-      return data.result;
-    }
+        const data = await api.get(
+          `/storage/kv/namespaces?${querys.join('&')}`
+        );
 
-    return [];
+        if (data && typeof data === 'object' && data.success && data.result) {
+          return data.result;
+        }
+
+        return [];
+      },
+
+      /**
+       * Get a KV namespace
+       */
+      get(id: string): KV {
+        return new KV(api, id);
+      },
+
+      /**
+       * Create a KV namespace
+       */
+      async create(title: string): Promise<KV> {
+        const data = await api.post(`/storage/kv/namespaces`, {
+          title,
+        });
+
+        if (
+          data &&
+          typeof data === 'object' &&
+          data.success &&
+          data.result &&
+          data.result.id
+        ) {
+          return new KV(api, data.result.id);
+        }
+
+        throw Error('Could not create workspace.');
+      },
+
+      /**
+       * Remove a KV namespace
+       */
+      async remove(id: string): Promise<void> {
+        const data = await api.delete(`/storage/kv/namespaces/${id}`);
+
+        if (data && typeof data === 'object' && data.success) {
+          return;
+        }
+
+        throw Error('Could not remove workspace.');
+      },
+
+      /**
+       * Rename a KV namespace
+       */
+      async rename(id: string, newTitle: string): Promise<void> {
+        const data = await api.put(`/storage/kv/namespaces/${id}`, {
+          title: newTitle,
+        });
+
+        if (data && typeof data === 'object' && data.success) {
+          return;
+        }
+
+        throw Error('Could not remove workspace.');
+      },
+    };
   }
 
-  /**
-   * Get a KV namespace
-   */
-  public kv_get(id: string): KV {
-    return new KV(this, id);
-  }
-
-  /**
-   * Create a KV namespace
-   */
-  public async kv_create(title: string): Promise<KV> {
-    const data = await this.post(`/storage/kv/namespaces`, {
-      title,
-    });
-
-    if (
-      data &&
-      typeof data === 'object' &&
-      data.success &&
-      data.result &&
-      data.result.id
-    ) {
-      return new KV(this, data.result.id);
-    }
-
-    throw Error('Could not create workspace.');
-  }
-
-  /**
-   * Remove a KV namespace
-   */
-  public async kv_remove(id: string): Promise<void> {
-    const data = await this.delete(`/storage/kv/namespaces/${id}`);
-
-    if (data && typeof data === 'object' && data.success) {
-      return;
-    }
-
-    throw Error('Could not remove workspace.');
-  }
-
-  /**
-   * Rename a KV namespace
-   */
-  public async kv_rename(id: string, newTitle: string): Promise<void> {
-    const data = await this.put(`/storage/kv/namespaces/${id}`, {
-      title: newTitle,
-    });
-
-    if (data && typeof data === 'object' && data.success) {
-      return;
-    }
-
-    throw Error('Could not remove workspace.');
-  }
-
-  private get authHeaders(): {
-    'X-Auth-Email': string;
-    'X-Auth-Key': string;
-  } {
+  private get authHeaders() {
     return {
       'X-Auth-Email': this.apiEmail,
       'X-Auth-Key': this.apiKey,
