@@ -1,6 +1,6 @@
 # workerkit
 
-A library to make writing Cloudflare Workers way nicer. An express style router is included
+A library to make writing Cloudflare Workers way nicer. It implements routing and a nice Workers KV API for you. With this library you have to write considerably less boilerplate than a standard Cloudflare Worker.
 
 ## installation
 
@@ -44,12 +44,18 @@ worker.listen();
 ```
 
 ## documentation
+
 https://workerkit.lcas.dev
+
+## notes on Workers KV
+
+If you are using KV in your worker only for `get`, `set` and `delete` operations, you should use the [native Worker KV API](https://workers.cloudflare.com/docs/reference/storage/api/#worker-api), because it is considerably faster because it is implemented as a native call in the Cloudflare Worker environment. As more functions become available in the native API, workerkit might start using these.
 
 ## soon(tm)
 
 - bulk Workers KV setting and deleting
 - query params in req
+- make KV give better errors
 
 ## licence
 

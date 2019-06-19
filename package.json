@@ -1,9 +1,9 @@
 {
   "name": "workerkit",
   "version": "v0.1.0",
-  "description": "workerkit",
+  "description": "A library to make writing Cloudflare Workers way nicer.",
   "license": "MIT",
-  "repository": "",
+  "repository": "https://github.com/lucacasonato/workerkit",
   "author": {
     "name": "Luca Casonato",
     "email": "hello@lcas.dev",
