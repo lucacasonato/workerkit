@@ -1,20 +1,20 @@
-import { DELETE, PATCH, POST, GET, RouteCondition, path } from './conditions';
+import { path, DELETE, GET, PATCH, POST, RouteCondition } from './conditions';
 
-export type Route = {
+export interface Route {
   conditions: RouteCondition | RouteCondition[];
   handler: RouteHandler;
-};
+}
 
 export type RouteHandler = (req: Request) => Response | Promise<Response>;
 
 export class Router {
-  private _routes: Route[] = [];
+  private localRoutes: Route[] = [];
 
   /**
    * An array of all routes in this worker
    */
   public get routes(): Route[] {
-    return this._routes;
+    return this.localRoutes;
   }
 
   /**
@@ -24,7 +24,7 @@ export class Router {
     conditions: RouteCondition | RouteCondition[],
     handler: RouteHandler
   ) {
-    this._routes.push({
+    this.localRoutes.push({
       conditions,
       handler,
     });
@@ -34,35 +34,35 @@ export class Router {
   /**
    * Adds a new route for GET on the specified URL
    */
-  get(url: string, handler: RouteHandler) {
+  public get(url: string, handler: RouteHandler) {
     return this.handle([GET, path(new RegExp(url))], handler);
   }
 
   /**
    * Adds a new route for POST on the specified URL
    */
-  post(url: string, handler: RouteHandler) {
+  public post(url: string, handler: RouteHandler) {
     return this.handle([POST, path(new RegExp(url))], handler);
   }
 
   /**
    * Adds a new route for PATCH on the specified URL
    */
-  patch(url: string, handler: RouteHandler) {
+  public patch(url: string, handler: RouteHandler) {
     return this.handle([PATCH, path(new RegExp(url))], handler);
   }
 
   /**
    * Adds a new route for DELETE on the specified URL
    */
-  delete(url: string, handler: RouteHandler) {
+  public delete(url: string, handler: RouteHandler) {
     return this.handle([DELETE, path(new RegExp(url))], handler);
   }
 
   /**
    * Adds a new route for DELETE on the specified URL
    */
-  all(handler: RouteHandler) {
+  public all(handler: RouteHandler) {
     return this.handle([], handler);
   }
 }

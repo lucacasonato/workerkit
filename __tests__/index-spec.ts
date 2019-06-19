@@ -7,3 +7,11 @@ test('Should have Worker available', () => {
 test('Should have Router available', () => {
   expect(index.Router).toBeTruthy();
 });
+
+test('Should have API available', () => {
+  expect(index.API).toBeTruthy();
+});
+
+test('Should have KV available', () => {
+  expect(index.KV).toBeTruthy();
+});

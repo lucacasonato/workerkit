@@ -42,14 +42,15 @@ export class Worker {
    * This handles an individual request and returns a response.
    */
   public async route(req: Request): Promise<Response> {
-    var route = this.resolve(req);
+    const route = this.resolve(req);
+
     if (!route) {
       return new Response('resource not found', {
-        status: 404,
-        statusText: 'not found',
         headers: {
           'content-type': 'text/plain',
         },
+        status: 404,
+        statusText: 'not found',
       });
     }
 
