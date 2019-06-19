@@ -29,7 +29,8 @@
     "test": "jest",
     "coverage": "jest --coverage",
     "watch": "yarn build -- --watch",
-    "watch:test": "jest --watch"
+    "watch:test": "jest --watch",
+    "docs": "typedoc --out docs --theme minimal src"
   },
   "dependencies": {
     "whatwg-fetch": "^3.0.0"

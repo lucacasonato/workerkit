@@ -1,4 +1,4 @@
-import { Router, Route } from './router';
+import { Router, RouteDefinition } from './router';
 
 /**
  * This handles and routes incoming HTTP requests.
@@ -17,14 +17,14 @@ export class Worker {
   /**
    * An array of all routes in this worker
    */
-  public get routes(): Route[] {
+  public get routes(): RouteDefinition[] {
     return this.routers.flatMap(router => router.routes);
   }
 
   /**
    * Find a route that matches the request condition(s)
    */
-  public resolve(req: Request): Route | undefined {
+  public resolve(req: Request): RouteDefinition | undefined {
     return this.routes.find(r => {
       if (!r.conditions || (Array.isArray(r) && !r.conditions.length)) {
         return true;

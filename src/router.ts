@@ -1,6 +1,17 @@
-import { path, DELETE, GET, PATCH, POST, RouteCondition } from './conditions';
+import {
+  path,
+  DELETE,
+  GET,
+  PATCH,
+  POST,
+  RouteCondition,
+  PUT,
+  OPTIONS,
+  HEAD,
+} from './conditions';
+import { Route } from './route';
 
-export interface Route {
+export interface RouteDefinition {
   conditions: RouteCondition | RouteCondition[];
   handler: RouteHandler;
 }
@@ -8,13 +19,13 @@ export interface Route {
 export type RouteHandler = (req: Request) => Response | Promise<Response>;
 
 export class Router {
-  private localRoutes: Route[] = [];
+  private routeDefinitions: RouteDefinition[] = [];
 
   /**
    * An array of all routes in this worker
    */
-  public get routes(): Route[] {
-    return this.localRoutes;
+  public get routes(): RouteDefinition[] {
+    return this.routeDefinitions;
   }
 
   /**
@@ -24,11 +35,18 @@ export class Router {
     conditions: RouteCondition | RouteCondition[],
     handler: RouteHandler
   ) {
-    this.localRoutes.push({
+    this.routeDefinitions.push({
       conditions,
       handler,
     });
     return this;
+  }
+
+  /**
+   * Handle connections for a specific route
+   */
+  public route(url: string) {
+    return new Route(this, url);
   }
 
   /**
@@ -46,6 +64,13 @@ export class Router {
   }
 
   /**
+   * Adds a new route for PUT on the specified URL
+   */
+  public put(url: string, handler: RouteHandler) {
+    return this.handle([PUT, path(new RegExp(url))], handler);
+  }
+
+  /**
    * Adds a new route for PATCH on the specified URL
    */
   public patch(url: string, handler: RouteHandler) {
@@ -57,6 +82,27 @@ export class Router {
    */
   public delete(url: string, handler: RouteHandler) {
     return this.handle([DELETE, path(new RegExp(url))], handler);
+  }
+
+  /**
+   * Adds a new route for HEAD on the specified URL
+   */
+  public head(url: string, handler: RouteHandler) {
+    return this.handle([HEAD, path(new RegExp(url))], handler);
+  }
+
+  /**
+   * Adds a new route for OPTIONS on the specified URL
+   */
+  public options(url: string, handler: RouteHandler) {
+    return this.handle([OPTIONS, path(new RegExp(url))], handler);
+  }
+
+  /**
+   * Adds a new route for any method on the specified URL
+   */
+  public any(url: string, handler: RouteHandler) {
+    return this.handle([path(new RegExp(url))], handler);
   }
 
   /**
