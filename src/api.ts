@@ -40,10 +40,13 @@ export class API {
    * Make an authenticated PUT request to the Cloudlare API
    */
   public put(url: string, data: any) {
+    const dataType = typeof data;
+
     return this.request(url, {
-      body: JSON.stringify(data),
+      body: dataType === 'string' ? data : JSON.stringify(data),
       headers: {
-        'content-type': 'application/json',
+        'content-type':
+          dataType === 'string' ? 'text/plain' : 'application/json',
       },
       method: 'PUT',
     });
