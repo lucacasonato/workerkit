@@ -1,19 +1,19 @@
-# workerkit
+# cf-worker-kit
 
 A library to make writing Cloudflare Workers way nicer. It implements routing and a nice Workers KV API for you. With this library you have to write considerably less boilerplate than a standard Cloudflare Worker.
 
 ## installation
 
-Install by running `npm i workerkit` or `yarn add workerkit` then import:
+Install by running `npm i cf-worker-kit` or `yarn add cf-worker-kit` then import:
 
 ```js
-const workerkit = require('workerkit');
+const workerkit = require('cf-worker-kit');
 // or
-const { Worker, Router, API } = require('workerkit');
+const { Worker, Router, API } = require('cf-worker-kit');
 // or
-import workerkit from 'workerkit';
+import workerkit from 'cf-worker-kit';
 // or
-import { Worker, Router, API } from 'workerkit';
+import { Worker, Router, API } from 'cf-worker-kit';
 ```
 
 ## example
