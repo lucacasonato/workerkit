@@ -1,5 +1,7 @@
 # cf-worker-kit
 
+[![GitHub Actions](https://github.com/lucacasonato/workerkit/workflows/ci/badge.svg)](https://github.com/lucacasonato/workerkit/actions)
+  
 A library to make writing Cloudflare Workers way nicer. It implements routing and a nice Workers KV API for you. With this library you have to write considerably less boilerplate than a standard Cloudflare Worker.
 
 ## installation
