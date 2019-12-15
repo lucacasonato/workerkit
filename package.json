@@ -1,6 +1,6 @@
 {
   "name": "cf-worker-kit",
-  "version": "v0.1.0",
+  "version": "v0.1.2",
   "description": "A library to make writing Cloudflare Workers way nicer.",
   "license": "MIT",
   "repository": "https://github.com/lucacasonato/workerkit",
@@ -36,17 +36,17 @@
     "whatwg-fetch": "^3.0.0"
   },
   "devDependencies": {
-    "@types/jest": "^23.3.3",
-    "@types/node": "^10.11.4",
-    "coveralls": "^3.0.2",
-    "jest": "^23.6.0",
-    "prettier": "^1.14.3",
-    "ts-jest": "^23.10.3",
-    "ts-node": "^7.0.1",
-    "tslint": "^5.11.0",
-    "tslint-config-prettier": "^1.15.0",
-    "typedoc": "^0.14.2",
-    "typescript": "^3.1.1"
+    "@types/jest": "^24.0.23",
+    "@types/node": "^12.12.17",
+    "coveralls": "^3.0.9",
+    "jest": "^24.9.0",
+    "prettier": "^1.19.1",
+    "ts-jest": "^24.2.0",
+    "ts-node": "^8.5.4",
+    "tslint": "^5.20.1",
+    "tslint-config-prettier": "^1.18.0",
+    "typedoc": "^0.15.4",
+    "typescript": "^3.7.3"
   },
   "engines": {
     "node": ">=10.0.0"
