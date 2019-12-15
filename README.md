@@ -31,14 +31,14 @@ const BOOKS = api.kv.get('kv_namespace_id');
 
 // hello world function
 router.any('.*/hello', req => {
-  return new Request(`Hello from method ${req.method}!`);
+  return new Response(`Hello from method ${req.method}!`);
 });
 
 // get the IDs of all books in the KV namespace
 router.get('.*/books', async () => {
   const books = await BOOKS.keys();
 
-  return new Request(books.map(book => book.name).join(', '));
+  return new Response(books.map(book => book.name).join(', '));
 });
 
 worker.use(router);
