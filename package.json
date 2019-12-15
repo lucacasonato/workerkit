@@ -1,6 +1,6 @@
 {
   "name": "cf-worker-kit",
-  "version": "v0.1.2",
+  "version": "v0.1.3",
   "description": "A library to make writing Cloudflare Workers way nicer.",
   "license": "MIT",
   "repository": "https://github.com/lucacasonato/workerkit",
