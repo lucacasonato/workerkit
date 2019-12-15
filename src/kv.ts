@@ -1,4 +1,5 @@
 import { API } from './api';
+export { KVNamespace as NativeKV } from '@cloudflare/workers-types';
 
 export class KV {
   public api: API;
@@ -61,7 +62,7 @@ export class KV {
   }
 
   /**
-   * Get a value for a specified key
+   * Set a value for a specified key
    */
   public async set(
     key: string,
@@ -88,7 +89,7 @@ export class KV {
   }
 
   /**
-   * Get a value for a specified key
+   * Delete the specified key
    */
   public async delete(key: string): Promise<void> {
     await this.api.delete(
